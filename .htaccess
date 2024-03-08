@@ -1,0 +1,30 @@
+# Enable the rewrite engine
+RewriteEngine On
+
+# Set the base directory for relative paths
+RewriteBase /
+
+# Redirect www to non-www (or vice versa)
+RewriteCond %{HTTP_HOST} ^www\.info.robosics\.com$ [NC]
+RewriteRule ^(.*)$ https://info.robosics.com/$1 [L,R=301]
+
+# Remove file extension from URLs
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^([^/]+)/?$ $1.html [L]
+
+# Prevent directory listing
+Options -Indexes
+
+# Set default index file
+DirectoryIndex index.html index.php
+
+# Set MIME types
+AddType application/json .json
+AddType application/rss+xml .rss
+
+# Disable server signature
+ServerSignature Off
+
+# Set custom error pages
+ErrorDocument 404 /error_pages/404.html
